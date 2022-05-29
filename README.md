@@ -1,5 +1,4 @@
-# 100-Days-Of-Swift 
-# Project-1
+# 100 Days Of Swift - Project 1
 
 First project from 100 days of swift program at Hacking with Swift by Paul Hudson.
 
