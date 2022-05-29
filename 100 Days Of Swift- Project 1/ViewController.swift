@@ -16,13 +16,23 @@ class ViewController: UITableViewController {
         
         let fm = FileManager.default //Default filemanager
         let path = Bundle.main.resourcePath! //Path of the project folder
-        let items = try! fm.contentsOfDirectory(atPath: path) //REturn paths of contained items
+        let items = try! fm.contentsOfDirectory(atPath: path) //Return paths of contained items
         
         for item in items {
             if item.hasPrefix("nssl") {
                 pictures.append(item)
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pictures.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
+        cell.textLabel?.text = pictures[indexPath.row]
+        return cell
     }
 }
 
