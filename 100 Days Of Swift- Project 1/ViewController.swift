@@ -16,7 +16,7 @@ class ViewController: UITableViewController {
         
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(barButtonClicked))
         let fm = FileManager.default //Default filemanager
         let path = Bundle.main.resourcePath! //Path of the project folder
         let items = try! fm.contentsOfDirectory(atPath: path) //Return paths of contained items
@@ -27,6 +27,15 @@ class ViewController: UITableViewController {
             }
         }
         pictures.sort()
+    }
+    
+    @objc func barButtonClicked() {
+        let siteLink = "https://github.com/ardabho/100-Days-Of-Swift--Project-1"
+        
+        let vc = UIActivityViewController(activityItems: [siteLink], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
+        
     }
     
     //MARK: - Table View Data Source Methods
