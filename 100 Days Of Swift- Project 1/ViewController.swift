@@ -17,9 +17,6 @@ class ViewController: UITableViewController {
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(barButtonClicked))
-        let fm = FileManager.default //Default filemanager
-        let path = Bundle.main.resourcePath! //Path of the project folder
-        let items = try! fm.contentsOfDirectory(atPath: path) //Return paths of contained items
         
         DispatchQueue.global().async {
             let fm = FileManager.default //Default filemanager
