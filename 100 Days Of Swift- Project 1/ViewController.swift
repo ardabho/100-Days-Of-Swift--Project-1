@@ -21,12 +21,18 @@ class ViewController: UITableViewController {
         let path = Bundle.main.resourcePath! //Path of the project folder
         let items = try! fm.contentsOfDirectory(atPath: path) //Return paths of contained items
         
-        for item in items {
-            if item.hasPrefix("nssl") {
-                pictures.append(item)
+        DispatchQueue.global().async {
+            let fm = FileManager.default //Default filemanager
+            let path = Bundle.main.resourcePath! //Path of the project folder
+            let items = try! fm.contentsOfDirectory(atPath: path) //Return paths of contained items
+            
+            for item in items {
+                if item.hasPrefix("nssl") {
+                    self.pictures.append(item)
+                }
             }
+            self.pictures.sort()
         }
-        pictures.sort()
     }
     
     @objc func barButtonClicked() {
