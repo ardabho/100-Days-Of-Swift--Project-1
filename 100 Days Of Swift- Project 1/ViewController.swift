@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UITableViewController {
     
     var pictures = [String]()
+    var viewCount = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,27 @@ class ViewController: UITableViewController {
                 }
             }
             self.pictures.sort()
+            
+            //Try to load the view count array from user defaults.
+            self.loadViewCount()
         }
+        
+        
+    }
+    
+    func loadViewCount() {
+        let defaults = UserDefaults.standard
+        
+        if let views = defaults.object(forKey: "viewCount") as? [Int] {
+            viewCount = views
+        } else {
+            viewCount = Array(repeating: 0, count: pictures.count)
+        }
+    }
+    
+    func save() {
+        let defaults = UserDefaults.standard
+        defaults.set(viewCount, forKey: "viewCount")
     }
     
     @objc func barButtonClicked() {
@@ -49,17 +70,21 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures[indexPath.row]
+        cell.detailTextLabel?.text = "View Count: \(viewCount[indexPath.row])"
         return cell
     }
     
     //MARK: - Table View Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        viewCount[indexPath.row] += 1
+        save()
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
             vc.imageNumberTitle = "Picture \(indexPath.row + 1) of \(pictures.count)"
             navigationController?.pushViewController(vc, animated: true)
         }
+        tableView.reloadData()
     }
 }
 
