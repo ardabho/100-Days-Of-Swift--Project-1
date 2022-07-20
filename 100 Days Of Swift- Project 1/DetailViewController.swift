@@ -20,6 +20,8 @@ class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(buttonTapped))
         navigationItem.largeTitleDisplayMode = .never
         
+        assert(selectedImage != nil, "Detail image is nil, it can't be nil!")
+        
         if let imageToLoad = selectedImage {
             imageView.image = UIImage(named: imageToLoad)
         }
